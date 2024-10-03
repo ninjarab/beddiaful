@@ -1,0 +1,32 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+/* Timeline styles */
+@media (max-width: 640px) {
+  .timeline-container .flex-col {
+    align-items: flex-start !important;
+  }
+
+  .timeline-container .w-full {
+    justify-content: flex-start !important;
+  }
+
+  .timeline-container .w-full .sm\:w-1\/2 {
+    width: calc(100% - 2rem) !important;
+    margin-left: 2rem !important;
+  }
+}
+
+/* Timeline styles */
+.timeline-item {
+  transition: transform 0.3s ease-out;
+}
+
+.timeline-item:hover {
+  transform: translateY(-5px);
+}
+
+.timeline-item>div>div>div>div {
+  transition: background-color 0.3s ease-out;
+}
