@@ -1,14 +1,17 @@
 defmodule BeddiafulWeb.Layouts do
-  @moduledoc """
-  This module holds different layouts used by your application.
-
-  See the `layouts` directory for all templates available.
-  The "root" layout is a skeleton rendered as part of the
-  application router. The "app" layout is set as the default
-  layout on both `use BeddiafulWeb, :controller` and
-  `use BeddiafulWeb, :live_view`.
-  """
   use BeddiafulWeb, :html
 
   embed_templates "layouts/*"
+
+  def meta_tags(assigns) do
+    ~H"""
+    <%= for tag <- BeddiafulWeb.ResumeData.meta_tags() do %>
+      <%= if tag.attribute == "name" do %>
+        <meta name={tag.name} content={tag.content}>
+      <% else %>
+        <meta property={tag.name} content={tag.content}>
+      <% end %>
+    <% end %>
+    """
+  end
 end
