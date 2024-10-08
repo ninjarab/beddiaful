@@ -3,12 +3,13 @@ defmodule BeddiafulWeb.ResumeLive do
   alias BeddiafulWeb.ResumeData
 
   def mount(_params, _session, socket) do
-    {:ok, assign(socket,
-      sections: ResumeData.sections(),
-      active_section: :current,
-      timeline_items: ResumeData.timeline_items(),
-      page_title: "Mehdi Beddiaf - Software Engineer"
-    )}
+    {:ok,
+     assign(socket,
+       sections: ResumeData.sections(),
+       active_section: :current,
+       timeline_items: ResumeData.timeline_items(),
+       page_title: "Mehdi Beddiaf - Software Engineer"
+     )}
   end
 
   def render(assigns) do
@@ -16,14 +17,43 @@ defmodule BeddiafulWeb.ResumeLive do
     <div class="min-h-screen bg-[#F5F5DC] text-[#1B3655] py-12 px-4 sm:px-6 lg:px-8">
       <main class="max-w-7xl mx-auto" role="main">
         <header class="text-center mb-12">
-          <h1 class="text-4xl font-extrabold text-[#1B3655] sm:text-5xl sm:tracking-tight lg:text-6xl">Mehdi Beddiaf</h1>
+          <h1 class="text-4xl font-extrabold text-[#1B3655] sm:text-5xl sm:tracking-tight lg:text-6xl">
+            Mehdi Beddiaf
+          </h1>
           <p class="mt-5 text-xl text-[#4A6741]">Software Engineer</p>
           <div class="mt-3 text-[#4A6741]">
-            <p>Los Angeles, CA | <a href="tel:+14158826758" class="hover:underline">415-882-6758</a> | <a href="mailto:mehdi.beddiaf@gmail.com" class="hover:underline">mehdi.beddiaf@gmail.com</a></p>
-            <p><a href="https://www.linkedin.com/in/mehdibeddiaf" target="_blank" rel="noopener noreferrer" class="hover:underline">LinkedIn: /in/mehdibeddiaf</a> | <a href="https://mehdib.dev" target="_blank" rel="noopener noreferrer" class="hover:underline">Website: mehdib.dev</a></p>
+            <p>
+              Los Angeles, CA | <a href="tel:+14158826758" class="hover:underline">415-882-6758</a>
+              |
+              <a href="mailto:mehdi.beddiaf@gmail.com" class="hover:underline">
+                mehdi.beddiaf@gmail.com
+              </a>
+            </p>
+            <p>
+              <a
+                href="https://www.linkedin.com/in/mehdibeddiaf"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="hover:underline"
+              >
+                LinkedIn: /in/mehdibeddiaf
+              </a>
+              |
+              <a
+                href="https://beddiaful.dev"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="hover:underline"
+              >
+                Website: beddiaful.dev
+              </a>
+            </p>
           </div>
         </header>
-        <nav aria-label="Resume sections" class="mt-12 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <nav
+          aria-label="Resume sections"
+          class="mt-12 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
+        >
           <%= for section <- @sections do %>
             <.section_button section={section} active_section={@active_section} />
           <% end %>
@@ -33,7 +63,11 @@ defmodule BeddiafulWeb.ResumeLive do
             <%= case @active_section do %>
               <% :timeline -> %>
                 <h2 class="text-3xl font-bold text-[#1B3655] mb-6">Career Timeline</h2>
-                <.live_component module={BeddiafulWeb.TimelineLive} id="timeline" timeline_items={@timeline_items} />
+                <.live_component
+                  module={BeddiafulWeb.TimelineLive}
+                  id="timeline"
+                  timeline_items={@timeline_items}
+                />
               <% _ -> %>
                 <.section_content section={Enum.find(@sections, &(&1.id == @active_section))} />
             <% end %>
@@ -53,7 +87,14 @@ defmodule BeddiafulWeb.ResumeLive do
       aria-current={if @active_section == @section.id, do: "page", else: "false"}
       aria-controls="section-content"
     >
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-6 w-6 mr-3"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        aria-hidden="true"
+      >
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d={@section.icon} />
       </svg>
       <span class="text-lg font-medium"><%= @section.title %></span>
@@ -77,11 +118,7 @@ defmodule BeddiafulWeb.ResumeLive do
           </div>
         <% :summary -> %>
           <p class="text-xl text-[#1B3655]">
-            Senior Software Engineer with 10+ years of experience specializing in backend systems and full-stack
-            development. Proven track record of optimizing high-scale applications, reducing infrastructure costs, and
-            implementing robust architectures. Expert in Elixir, Phoenix, and OTP, with a strong background in gaming
-            and e-commerce platforms. Demonstrated ability to lead complex projects, improve system performance,
-            and drive technological innovations in fast-paced environments.
+            Senior Software Engineer with 10+ years of experience in backend systems and full-stack development. At Discord, optimized real-time infrastructure for multi-million member servers, reducing cluster size by 67% and saving $370K annually. Implemented large-scale data migrations at The RealReal, including transitioning 500,000 consignors to Stripe. Proficient in Elixir, Phoenix, and OTP. Led development of core applications at ThredUP, processing 5,000 items weekly across multiple distribution centers. Expertise in high-scale systems, real-time applications, and e-commerce platforms.
           </p>
         <% :experience -> %>
           <%= for job <- ResumeData.timeline_items() do %>
@@ -135,18 +172,33 @@ defmodule BeddiafulWeb.ResumeLive do
         <% :projects -> %>
           <div class="mb-6">
             <h3 class="text-2xl font-bold text-[#1B3655]">Stk v1</h3>
-            <p class="text-lg text-[#4A6741]"><a href="https://github.com/MehdiBeddiaf/stk/" class="hover:underline">github.com/MehdiBeddiaf/stk/</a> | 2018</p>
-            <p class="mt-2 text-[#1B3655]">A real-time stock quotes, charts and market overview built with PureScript and Halogen consuming financial data from the IEX API.</p>
+            <p class="text-lg text-[#4A6741]">
+              <a href="https://github.com/MehdiBeddiaf/stk/" class="hover:underline">
+                github.com/MehdiBeddiaf/stk/
+              </a>
+              | 2018
+            </p>
+            <p class="mt-2 text-[#1B3655]">
+              A real-time stock quotes, charts and market overview built with PureScript and Halogen consuming financial data from the IEX API.
+            </p>
             <ul class="mt-2 text-[#1B3655] list-disc list-inside">
-              <li>Learned PureScript, a statically-typed functional programming language via the online book PureScript by Example.</li>
-              <li>Learned Halogen, a type-safe library for building user interfaces in PureScript via the code examples.</li>
+              <li>
+                Learned PureScript, a statically-typed functional programming language via the online book PureScript by Example.
+              </li>
+              <li>
+                Learned Halogen, a type-safe library for building user interfaces in PureScript via the code examples.
+              </li>
             </ul>
           </div>
         <% :blog -> %>
           <div class="text-center py-12">
             <h2 class="text-3xl font-bold text-[#1B3655] mb-4">Blog Coming Soon!</h2>
-            <p class="text-xl text-[#4A6741]">Stay tuned for insightful articles on Elixir, system design, and more.</p>
-            <p class="text-lg text-[#1B3655] mt-4">Check back soon or follow me on social media for updates!</p>
+            <p class="text-xl text-[#4A6741]">
+              Stay tuned for insightful articles on Elixir, system design, and more.
+            </p>
+            <p class="text-lg text-[#1B3655] mt-4">
+              Check back soon or follow me on social media for updates!
+            </p>
           </div>
       <% end %>
     </div>
